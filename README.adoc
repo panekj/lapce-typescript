@@ -1,0 +1,12 @@
+= Lapce plugin for Typescript/Javascript (typescript-language-server)
+
+== Prerequisites
+
+1. Install `typescript-language-server` (Requires Node.JS and `npm`)
++
+[source,sh]
+----
+npm i --global yaml-language-server
+----
++
+2. Install `Typescript / Javascript` from Lapce plugin menu
