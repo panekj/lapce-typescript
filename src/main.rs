@@ -25,6 +25,16 @@ fn initialize(params: InitializeParams) -> Result<()> {
             pattern: Some(String::from("**.js")),
             scheme: None,
         },
+        DocumentFilter {
+            language: Some(String::from("typescriptreact")),
+            pattern: Some(String::from("**.tsx")),
+            scheme: None,
+        },
+        DocumentFilter {
+            language: Some(String::from("javascriptreact")),
+            pattern: Some(String::from("**.jsx")),
+            scheme: None,
+        },
     ];
     let mut server_args = vec!["--stdio".to_string()];
 
