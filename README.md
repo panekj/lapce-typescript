@@ -2,18 +2,17 @@
 
 ## Prerequisites
 
-Install `typescript-language-server` and `typescript` (Requires NodeJS) via `npm` or your system package manager
+Install `typescript-language-server` and `typescript` (Requires NodeJS) via `npm` or your system package manager  
+Server needs to be in one of the paths included in `PATH` environment variable
 
 ```shell
 npm i --global typescript-language-server typescript
 ```
 
-## Configuration
-
-In `settings.toml`:
+## Available configuration
 
 ```toml
 [lapce-typescript.volt]
 serverPath = "<custom executable>"
-serverArgs = ["--stdio"] # --stdio is required for all LSPs made in nodejs
+serverArgs = ["--stdio"] # --stdio is required for all LSPs written in nodejs
 ```

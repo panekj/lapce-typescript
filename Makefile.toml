@@ -27,8 +27,8 @@ args = ["clippy"]
 
 [tasks.build-dev]
 command = "cargo"
-args = ["install", "--path", ".", "--debug"]
+args = ["install", "--path", ".", "--no-track", "--debug"]
 
 [tasks.build-release]
 command = "cargo"
-args = ["install", "--path", "."]
+args = ["install", "--path", ".", "--no-track"]

@@ -1,15 +1,21 @@
 name = "lapce-typescript"
-version = "1.0.2"
+version = "2022.11.0"
 author = "panekj"
-display-name = "Typescript / Javascript"
-description = "TS/JS for Lapce: powered by typescript-language-server"
+display-name = "TS / JS"
+description = "Typescript & Javascript language support"
 wasm = "bin/lapce-typescript.wasm"
 icon = "ts-logo-512.svg"
 
 [activation]
 language = ["typescript", "typescriptreact", "javascript", "javascriptreact"]
-workspace-contains = ["*/package.json"]
+workspace-contains = ["*/package.json", "*/*.ts", "*/*.js", "*/*.tsx", "*/*.jsx"]
 
 [config."volt.serverPath"]
 default = ""
 description = "Path to typescript-language-server"
+
+[config."volt.serverArgs"]
+default = ["--stdio"]
+description = "LSP server arguments to pass when launching"
+
+# [config.""]

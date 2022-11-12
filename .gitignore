@@ -1,8 +1,5 @@
-bin/
+**.wasm
 /target
-Cargo.lock
-.crates.toml
-.crates2.json
 
 # General
 .DS_Store
@@ -548,15 +545,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
-
 # Local History for Visual Studio Code
 .history/
-
-# Built Visual Studio Code Extensions
-*.vsix
