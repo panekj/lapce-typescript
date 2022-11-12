@@ -4,6 +4,7 @@ author = "panekj"
 display-name = "Typescript / Javascript"
 description = "TS/JS for Lapce: powered by typescript-language-server"
 wasm = "bin/lapce-typescript.wasm"
+icon = "ts-logo-512.svg"
 
 [activation]
 language = ["typescript", "typescriptreact", "javascript", "javascriptreact"]
