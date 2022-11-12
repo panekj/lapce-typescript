@@ -4,7 +4,7 @@ use lapce_plugin::{
     lsp_types::{request::Initialize, DocumentFilter, DocumentSelector, InitializeParams, Url},
     Request,
   },
-  register_plugin, LapcePlugin, PLUGIN_RPC,
+  register_plugin, LapcePlugin, VoltEnvironment, PLUGIN_RPC,
 };
 use serde_json::Value;
 
@@ -84,7 +84,10 @@ fn initialize(params: InitializeParams) -> Result<()> {
     }
   }
 
-  let server_uri = ok!(Url::parse("urn:typescript-language-server"));
+  let server_uri = match VoltEnvironment::operating_system().as_deref() {
+    | Ok("windows") => ok!(Url::parse("urn:typescript-language-server.cmd")),
+    | _ => ok!(Url::parse("urn:typescript-language-server")),
+  };
 
   PLUGIN_RPC.start_lsp(
     server_uri,

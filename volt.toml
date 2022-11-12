@@ -1,5 +1,5 @@
 name = "lapce-typescript"
-version = "1.0.1"
+version = "1.0.2"
 author = "panekj"
 display-name = "Typescript / Javascript"
 description = "TS/JS for Lapce: powered by typescript-language-server"
@@ -8,3 +8,7 @@ wasm = "bin/lapce-typescript.wasm"
 [activation]
 language = ["typescript", "typescriptreact", "javascript", "javascriptreact"]
 workspace-contains = ["*/package.json"]
+
+[config."volt.serverPath"]
+default = ""
+description = "Path to typescript-language-server"
