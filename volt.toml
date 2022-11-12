@@ -4,3 +4,7 @@ author = "panekj"
 display-name = "Typescript / Javascript"
 description = "TS/JS for Lapce: powered by typescript-language-server"
 wasm = "bin/lapce-typescript.wasm"
+
+[activation]
+language = ["typescript", "typescriptreact", "javascript", "javascriptreact"]
+workspace-contains = ["*/package.json"]
