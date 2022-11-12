@@ -1,5 +1,5 @@
 name = "lapce-typescript"
-version = "1.0.0"
+version = "1.0.1"
 author = "panekj"
 display-name = "Typescript / Javascript"
 description = "TS/JS for Lapce: powered by typescript-language-server"
