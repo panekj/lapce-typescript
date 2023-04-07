@@ -6,7 +6,7 @@ Install `typescript-language-server` and `typescript` (Requires NodeJS) via `npm
 Server needs to be in one of the paths included in `PATH` environment variable
 
 ```shell
-npm i --global typescript-language-server typescript
+npm i --global typescript-language-server@2 typescript
 ```
 
 ## Available configuration
