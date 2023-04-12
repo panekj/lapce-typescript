@@ -1,7 +1,10 @@
 use anyhow::{anyhow, Result};
 use lapce_plugin::{
   psp_types::{
-    lsp_types::{request::Initialize, DocumentFilter, DocumentSelector, InitializeParams, Url},
+    lsp_types::{
+      request::Initialize, DocumentFilter, DocumentSelector, InitializeParams, InitializeResult,
+      Url,
+    },
     Request,
   },
   register_plugin, LapcePlugin, VoltEnvironment, PLUGIN_RPC,
@@ -27,7 +30,10 @@ macro_rules! ok {
     }
   };
 }
-fn initialize(params: InitializeParams) -> Result<()> {
+
+type LspParams = (Url, Vec<String>, DocumentSelector, Option<Value>);
+
+fn initialize(params: InitializeParams) -> Result<LspParams> {
   let document_selector: DocumentSelector = vec![
     DocumentFilter {
       language: Some(string!("typescript")),
@@ -70,14 +76,13 @@ fn initialize(params: InitializeParams) -> Result<()> {
       if let Some(server_path) = volt.get("serverPath") {
         if let Some(server_path) = server_path.as_str() {
           if !server_path.is_empty() {
-            let server_uri = ok!(Url::parse(&format!("urn:{}", server_path)));
-            PLUGIN_RPC.start_lsp(
+            let server_uri = ok!(Url::parse(&format!("urn:{server_path}")));
+            return Ok((
               server_uri,
               server_args,
               document_selector,
               params.initialization_options,
-            );
-            return Ok(());
+            ));
           }
         }
       }
@@ -89,27 +94,33 @@ fn initialize(params: InitializeParams) -> Result<()> {
     | _ => ok!(Url::parse("urn:typescript-language-server")),
   };
 
-  PLUGIN_RPC.start_lsp(
+  Ok((
     server_uri,
     server_args,
     document_selector,
     params.initialization_options,
-  );
-
-  Ok(())
+  ))
 }
 
 impl LapcePlugin for State {
-  fn handle_request(&mut self, _id: u64, method: String, params: Value) {
+  fn handle_request(&mut self, id: u64, method: String, params: Value) {
     #[allow(clippy::single_match)]
     match method.as_str() {
       | Initialize::METHOD => {
         let params: InitializeParams = serde_json::from_value(params).unwrap();
-        if let Err(e) = initialize(params) {
-          PLUGIN_RPC.stderr(&format!("plugin returned with error: {e}"))
+        match initialize(params) {
+          | Ok((uri, args, filters, options)) => {
+            PLUGIN_RPC.start_lsp(uri, args, filters, options).unwrap();
+            PLUGIN_RPC
+              .host_success(id, InitializeResult::default())
+              .unwrap()
+          }
+          | Err(err) => PLUGIN_RPC.host_error(id, err.to_string()).unwrap(),
         }
       }
-      | _ => {}
+      | o => PLUGIN_RPC
+        .host_error(id, format!("plugin doesn't understand request '{o}'"))
+        .unwrap(),
     }
   }
 }
